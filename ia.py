@@ -74,7 +74,7 @@ def get_cells_actions(game_param, variables, numbers):
             elif number <= 0:
                 cells_actions.append([0, variables[index]])
         index += 1
-    if (len(variables) == 1 and len(cells_actions) == 0):
+    if (1 == len(variables) and 0 == len(cells_actions)):
         cells_actions.append([0, variables[0]])
     return cells_actions
 
