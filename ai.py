@@ -3,7 +3,7 @@ import main
 import time
 import random
 
-def get_cell(height, width):
+def get_cell_ai(height, width):
     return {"x": random.randrange(0, width - 1), "y": random.randrange(0, height - 1)}
 
 
@@ -17,14 +17,14 @@ def get_variables(game_param):
                     variables.append(cell)
     return variables
 
-def get_matrixA_B(game_param, variables):
+def get_matrix_A_B(game_param, variables):
     A = []
     B = []
     for y in reversed(range(0, game_param["height"])):
         for x in range(0, game_param["width"]):
             cell = {"x": x, "y": y}
             if cell in game_param["revealed"]:
-                neighbors = main.get_surronding_cells(game_param["height"], game_param["width"], cell)
+                neighbors = main.get_surrounding_cells(game_param["height"], game_param["width"], cell)
                 surronding_variables = []
                 flag = 0
                 for neighbor in neighbors:
@@ -61,7 +61,7 @@ def get_cells_actions(game_param, variables, numbers):
     cells_actions = []
     index = 0
     while index < len(variables):
-        neighbors = main.get_surronding_cells(game_param["height"], game_param["width"], variables[index])
+        neighbors = main.get_surrounding_cells(game_param["height"], game_param["width"], variables[index])
         cell_revealed = False
         for neighbor in neighbors:
             if neighbor in game_param["revealed"]:
@@ -74,18 +74,18 @@ def get_cells_actions(game_param, variables, numbers):
             elif number <= 0:
                 cells_actions.append([0, variables[index]])
         index += 1
-    if (1 == len(variables) and 0 == len(cells_actions)):
+    if (len(variables) == 1 and len(cells_actions) == 0):
         cells_actions.append([0, variables[0]])
     return cells_actions
 
-def runAI(game_param):
+def run_ai(game_param):
     stop = False
     if not main.win(game_param):
         while not stop:
             main.show_map(game_param)
             time.sleep(1)
             variables = get_variables(game_param)
-            matrix = get_matrixA_B(game_param, variables)
+            matrix = get_matrix_A_B(game_param, variables)
             numbers = roundNumbers(pinv(matrix['A'], matrix['B']))
             cells_actions = get_cells_actions(game_param, variables, numbers)
             for cell in cells_actions:
