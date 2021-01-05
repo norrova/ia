@@ -52,7 +52,7 @@ def generate_map(height, width, bombs):
 
 # Récupérer le nombre de voisins
 def get_bomb_neighbor(height, width, bombs, cell):
-    cells = get_surronding_cells(height, width, cell)
+    cells = get_surrounding_cells(height, width, cell)
     bomb_neighbor = 0
     for cell in cells:
         if cell in bombs:
@@ -60,7 +60,7 @@ def get_bomb_neighbor(height, width, bombs, cell):
     return bomb_neighbor
 
 # Récupération des cellules avoisinantes une cellule
-def get_surronding_cells(height, width, cell):
+def get_surrounding_cells(height, width, cell):
     surronding_cells = []
     for y in range(-1, 2):
         res_y = cell["y"] + y
@@ -150,7 +150,7 @@ def cells_propagation(game_param, to_discover):
     for cell_discover in to_discover:
         if cell_discover not in game_param["revealed"]:
             game_param["revealed"].append(cell_discover)
-        for cell in get_surronding_cells(game_param["height"], game_param["width"], cell_discover):
+        for cell in get_surrounding_cells(game_param["height"], game_param["width"], cell_discover):
             if cell not in to_discover and cell not in game_param["revealed"]:
                 if 0 == game_param["map"][cell["y"]][cell["x"]]:
                     tmp_cells.append(cell)
@@ -191,7 +191,7 @@ def setup(level, cell):
     game_param = level
     game_param.update(nb_bombs = level["mines"])
     game_param.update(nb_total_cells = ((game_param["height"] * game_param["width"]) - game_param["mines"]))
-    excluded_cells = get_surronding_cells(game_param["height"], game_param["width"], cell)
+    excluded_cells = get_surrounding_cells(game_param["height"], game_param["width"], cell)
     game_param.update(bombs = generate_bombs(game_param["height"], game_param["width"], game_param["mines"], excluded_cells))
     game_param.update(map = generate_map(game_param["height"], game_param["width"], game_param["bombs"]))
     game_param.update(revealed = [], flagged = [], variables = [])
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     levels = get_json(path_levels)
     level = get_level(levels)
     # cell = get_cell(level["height"], level["width"])
-    cell = ai.get_cell(level["height"], level["width"])
+    cell = ai.get_cell_ai(level["height"], level["width"])
     game_param = setup(level, cell)
-    ai.runAI(game_param)
+    ai.run_ai(game_param)
     # run(game_param)
