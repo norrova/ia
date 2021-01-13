@@ -110,6 +110,7 @@ def number_to_emoji(number):
 # Affichage de la carte
 def show_map(game_param):
     os.system("clear")
+    print("mines remaining : " + str(game_param["nb_bombs"]))
     for y in reversed(range(0, game_param["height"])):
         for x in range(0, game_param["width"]):
             cell = {"x": x, "y": y}
