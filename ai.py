@@ -78,16 +78,23 @@ def get_cells_actions(game_param, variables, numbers):
         cells_actions.append([0, variables[0]])
     return cells_actions
 
+def show_matrix(variables, matrix_A_B, numbers):
+    print(variables)
+    print(matrix_A_B)
+    print(numbers)
+    input()
+
+
 def run_ai(game_param):
     stop = False
     if not main.win(game_param):
         while not stop:
             main.show_map(game_param)
-            time.sleep(1)
             variables = get_variables(game_param)
             matrix = get_matrix_A_B(game_param, variables)
             numbers = roundNumbers(pinv(matrix['A'], matrix['B']))
             cells_actions = get_cells_actions(game_param, variables, numbers)
+            show_matrix(variables, matrix, numbers)
             for cell in cells_actions:
                 main.apply_user_action(game_param, cell[0], cell[1])
                 if main.win(game_param) or main.lose(game_param, cell[1]):
