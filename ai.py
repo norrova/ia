@@ -79,9 +79,9 @@ def get_cells_actions(game_param, variables, numbers):
     return cells_actions
 
 def show_matrix(variables, matrix_A_B, numbers):
-    print(variables)
+    print("variables :" + str(variables))
     print(matrix_A_B)
-    print(numbers)
+    print("pinv" + str(numbers))
     input()
 
 
